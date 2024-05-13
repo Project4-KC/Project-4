@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bodychahid  {
+    font-family: 'Inconsolata', monospace;
+    margin: 0;
+    padding: 0;
+    background-image: url("img/background.png");
+    background-size: cover;
+}
+
+ 
+header {
+    height: 15vh;
+    background-color:white;
+    border: rgb(0, 0, 0) solid 2px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px; 
+    padding-top: 40px;
+    
+}
+
+header > img {
+    height: auto;
+    max-height: 100px; 
+}
+
+.headerlinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerlinks > a {
+    color: rgb(255, 119, 139);
+    font-size: 25px;
+    font-family: cursive;
+    text-decoration: none;
+    padding: 0 10px; 
+    
+    
+    
+    
+}
+
+.headerlinks a:hover {
+    transform: scale(1.15);
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+   
+
+ 
+  }
+
+.headerlinks a:hover{
+
+  border-bottom: 1px solid rgb(0, 0, 0); 
+
+}
