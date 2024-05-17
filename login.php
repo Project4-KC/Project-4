@@ -19,9 +19,17 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
+function getFriendsList($pdo, $user_id)
+{
+    $stmt = $pdo->prepare('SELECT users.username FROM friends 
+                            INNER JOIN users ON friends.user2_id = users.id 
+                            WHERE friends.user1_id = ?');
+    $stmt->execute([$user_id]);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['register'])) {
-        // Registration logic
         $username = $_POST['username'];
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $email = $_POST['email'];
@@ -33,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo '<script>alert("Error registering user");</script>';
         }
     } elseif (isset($_POST['login'])) {
-        // Login logic
         $username = $_POST['username'];
         $password = $_POST['password'];
 
@@ -43,13 +50,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $user['id'];
             echo '<script>alert("Login successful");</script>';
         } else {
             echo '<script>alert("Invalid username or password");</script>';
         }
+    } elseif (isset($_POST['add_friend'])) {
+        $friend_username = $_POST['friend_username'];
+
+
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ?');
+        $stmt->execute([$friend_username]);
+        $friend = $stmt->fetch();
+
+        if ($friend) {
+            $stmt = $pdo->prepare('INSERT INTO friends (user1_id, user2_id) VALUES (?, ?)');
+            $stmt->execute([$_SESSION['user_id'], $friend['id']]);
+            echo '<script>alert("Friend added successfully");</script>';
+        } else {
+            echo '<script>alert("Friend not found");</script>';
+        }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login System</title>
     <link rel="stylesheet" href="style.css">
     <script src="server.js"></script>
+    <meta name="author" content="Kevin">
 </head>
 <style>
     #register-page {
@@ -137,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body id="register-page">
     <main>
         <div class="back">
-            <a href="#" onclick="window.history.go(-1); return false;">
+            <a href="index.php">
                 < Go Back</a>
         </div>
         <div class="account">
