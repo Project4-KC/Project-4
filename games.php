@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php include "Assets/header.php"; ?>   
 
 <!DOCTYPE html>
@@ -77,3 +78,4 @@
 </html>
 
 <?php include "Assets/footer.php"; ?>     
+=======
