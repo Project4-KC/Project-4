@@ -27,7 +27,7 @@
 
 
         <header>
-            <img src="img/sushi.png" alt="sushi">
+            <img src="img/.png" alt=" ">
             <nav class="headerlinks">   
                  
                 <a href="index.php">Home</a>
