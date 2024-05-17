@@ -13,8 +13,8 @@
 
 
 header {
-    height: 8vh;
-    background-color:blue;
+    height: 15vh;
+    background-color: white;
     border: rgb(0, 0, 0) solid 2px;
     display: flex;
     justify-content: space-between;
@@ -55,6 +55,7 @@ header>img {
 
 
 }
+
 
 .headerlinks a:hover {
 
